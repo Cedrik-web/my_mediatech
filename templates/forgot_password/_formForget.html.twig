@@ -1,0 +1,28 @@
+{{ form_start(form)}}
+
+    <div id="cadreTitleLogin">
+        <img id="logoReduit" src="/images/logo_reduit.png" alt="logo">
+        <h1 class="titleFormLogin">Mot de passe oublié</h1>
+    </div>
+
+    <div class="firstBoxLogin">
+        <div class="boxLogin large">
+            <p>Renseigné votre adresse mail puis valider, un e-mail vous serez envoyer afin de redéfinir votre mot de passe.</p>
+        </div>
+        <div class="boxLogin medium">
+            {{ form_label(form.email, null, {'label_attr': {'class': 'form-label'}})}}
+            {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="boxLogin medium">
+            <input type="hidden" name="_csrf_token"value="{{ csrf_token('authenticate') }}">
+            <button class="btn btn-lg btn-primary" type="submit">Valider</button>
+        </div>
+
+        <div class="boxLogin little">
+            <input type="hidden" name="_csrf_token"value="{{ csrf_token('authenticate') }}">
+            <a class="btn btn-lg btn-primary" href="{{ path('app_user_register') }}">S'incrire</a>
+        </div>
+    </div>
+
+{{ form_end(form) }}

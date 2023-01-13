@@ -1,0 +1,70 @@
+{{ form_start(form)}}
+
+            {# {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+            {% if app.user %}
+                <div class="mb-3">
+                    You are logged in as {{ app.user.userIdentifier }}, <a href="">Logout</a>
+                </div>
+            {% endif %} #}
+
+    <div id="cadreTitleLogin">
+        <img id="logoReduit" src="/images/logo_reduit.png" alt="logo">
+        <h1 class="titleFormLogin">Inscription à My MediATech</h1>
+    </div>
+
+    <div class="firstBoxLogin">
+        <div class="boxLogin">
+            {{ form_label(form.first_name, null, {'label_attr': {'class': 'form-label'}})}}
+            {{ form_widget(form.first_name, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="boxLogin">
+            {{ form_label(form.last_name, null, {'label_attr': {'class': 'form-label'}})}}
+            {{ form_widget(form.last_name, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="boxLogin">
+            {{ form_label(form.email, null, {'label_attr': {'class': 'form-label'}})}}
+            {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="boxLogin">
+            {{ form_label(form.password.first, null, {'label_attr': {'class': 'form-label'}})}}
+            {{ form_widget(form.password.first, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="boxLogin">
+            {{ form_label(form.password.second, null, {'label_attr': {'class': 'form-label'}})}}
+            {{ form_widget(form.password.second, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="boxLogin">
+            {{ form_label(form.adress, null, {'label_attr': {'class': 'form-label'}})}}
+            {{ form_widget(form.adress, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="boxLogin">
+            {{ form_label(form.city, null, {'label_attr': {'class': 'form-label'}})}}
+            {{ form_widget(form.city, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="boxLogin">
+            {{ form_label(form.zip_code, null, {'label_attr': {'class': 'form-label'}})}}
+            {{ form_widget(form.zip_code, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="boxLogin">
+            {{ form_label(form.country, null, {'label_attr': {'class': 'form-label'}})}}
+            {{ form_widget(form.country, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        
+        <div class="boxLogin botton">
+            <input type="hidden" name="_csrf_token"value="{{ csrf_token('authenticate') }}">
+            <button class="btn">{{ button_label|default("S'enregistrer") }}</button>
+        </div>
+    </div>
+
+{{ form_end(form) }}

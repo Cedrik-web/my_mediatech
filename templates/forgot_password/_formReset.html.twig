@@ -1,0 +1,30 @@
+{{ form_start(form)}}
+
+    <div id="cadreTitleLogin">
+        <img id="logoReduit" src="/images/logo_reduit.png" alt="logo">
+        <h1 class="titleFormLogin">Mot de passe oublié</h1>
+    </div>
+
+    <div class="firstBoxLogin">
+        <div class="boxLogin large">
+            <p>Redéfinissez votre mot de passe.</p>
+        </div>
+
+        <div class="boxLogin medium">
+            {{ form_label(form.password.first, null, {'label_attr': {'class': 'form-label'}})}}
+            {{ form_widget(form.password.first, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        
+        <div class="boxLogin medium">
+            {{ form_label(form.password.second, null, {'label_attr': {'class': 'form-label'}})}}
+            {{ form_widget(form.password.second, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="boxLogin medium">
+            <input type="hidden" name="_csrf_token"value="{{ csrf_token('authenticate') }}">
+            <button class="btn btn-lg btn-primary" type="submit">Valider</button>
+        </div>
+
+    </div>
+
+{{ form_end(form) }}

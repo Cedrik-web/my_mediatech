@@ -1,0 +1,166 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url(/images/shadow.jpg);
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+a {
+    text-decoration: none;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: large;
+}
+
+header {
+    height: 100px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.600);
+    display: flex;
+    position: sticky;
+    top: -35px;
+}
+
+main {
+    min-height: 700px;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 15%;
+}
+
+.lG {
+    width: 100%;
+}
+
+.navbar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+}
+
+.connexion {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    width: 15%;
+}
+
+.menu {
+    border-bottom: 2px solid white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 70%;
+    height: 100%;
+    margin-bottom: 20px;
+}
+
+.menu-connexion {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    width: 70%;
+    height: 100%;
+}
+
+.cercle {
+    width: 35px;
+    height: 32px;
+    background-color: gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.line-connexion {
+    border-bottom:solid 2px white ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 10px ;
+    margin-bottom: 20px;
+}
+
+.active {
+    color: white;
+    background-color: black;
+    padding: 5px 5px 5px 5px;
+}
+
+.passive {
+    color: black;
+    font-weight: bold;
+    transition-duration: 1s;
+}
+
+.passive:hover {
+    background-color: gray;
+    padding: 5px 0px 5px 0px;
+    transition-duration: 1s;
+}
+
+.accroche {
+    font-size: x-large;
+    font-weight: bold;
+    margin: 0 0 5px 0;
+}
+
+main {
+    min-height: 700px;
+}
+
+.mini {
+    height: 60%;
+}
+
+footer {
+    width: 100%;
+    height: 150px;
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.600);
+}
+
+.boxLeft {
+    width: 10%;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.boxCenter {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.boxRigth {
+    width: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.boxRigth > div {
+    width: 80%;
+    height: 35px;
+    border-bottom: solid 2px white;
+}
+
+.boxRigth > div > a {
+    color: black;
+}
+
+.line {
+    width: 100%;
+    border-top: solid 2px black;
+    height: 30%;
+    text-align: center;
+}

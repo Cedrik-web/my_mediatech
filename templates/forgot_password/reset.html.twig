@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ForgotPasswordController!{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="/css/stylesReset.css">
+{% endblock %}
+
+{% block body %}
+
+<header>
+    <div class="logo">
+        <img class="lG" src="/images/logo.png" alt="logo my média tech">
+    </div>
+    <div class="navbar">
+        <div>
+            <p class="accroche">Votre médiathèque privée partout et à partager avec vos amis.</p>
+        </div>
+        <div class="menu">
+            <a class="passive" href="{{ path('app_home') }}">Home</a>
+            <a class="passive" href="{{ path('app_media_index') }}">Mes Médias</a>
+            <a class="passive" href="#">Mon Réseaux</a>
+            <a class="passive" href="#">Contact</a>
+        </div>
+    </div>
+    <div class="connexion">
+        
+        {% if app.user %}
+        <div class="menu-connexion">
+            <div class="line-connexion">
+                <div class="cercle"><img src="/images/person.svg" alt="customer"></div>
+                <a class="active" href="{{ path('app_logout') }}">{{ app.user.FirstName }}</a>
+            </div>
+        </div>    
+        {% else %}
+        <div class="menu-connexion">
+            <div class="line-connexion">
+                <div class="cercle"><img src="/images/person.svg" alt="customer"></div>
+                <a class="active" href="{{ path('app_login') }}">Connexion</a>
+            </div>
+        </div>
+        {% endif %}
+       
+    </div>
+</header>
+
+<main>
+    <div id="boxForm">
+        <form id="formConnexion" method="post">
+
+            {% include ("forgot_password/_formReset.html.twig") %}
+
+        </form>
+    </div>
+</main>
+
+<footer>
+    <div class="boxLeft">
+        <img class="mini" src="/images/logo_reduit.png" alt="logo my média tech">
+    </div>
+    <div class="boxCenter">
+        <div class="line">
+            <p>Réaliser par Rougier Cédrik</p>
+        </div>
+    </div>
+    <div class="boxRigth">
+        <div>
+            <a href="#">Mentions légales</a>
+        </div>
+    </div>   
+</footer>
+
+{% endblock %}
