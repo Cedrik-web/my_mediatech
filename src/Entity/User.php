@@ -68,11 +68,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Album::class, orphanRemoval: true)]
     private Collection $albums;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Network::class)]
+    private Collection $networks;
+
+    #[ORM\OneToMany(mappedBy: 'follow', targetEntity: Network::class)]
+    private Collection $follower;
+
     public function __construct()
     {
         $this->albums = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->likes = new ArrayCollection();
+        $this->networks = new ArrayCollection();
+        $this->follower = new ArrayCollection();
     }
 
     public function __toString()
@@ -353,6 +361,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($album->getUser() === $this) {
                 $album->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Network>
+     */
+    public function getNetworks(): Collection
+    {
+        return $this->networks;
+    }
+
+    public function addNetwork(Network $network): self
+    {
+        if (!$this->networks->contains($network)) {
+            $this->networks->add($network);
+            $network->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNetwork(Network $network): self
+    {
+        if ($this->networks->removeElement($network)) {
+            // set the owning side to null (unless already changed)
+            if ($network->getUser() === $this) {
+                $network->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Network>
+     */
+    public function getFollower(): Collection
+    {
+        return $this->follower;
+    }
+
+    public function addFollower(Network $follower): self
+    {
+        if (!$this->follower->contains($follower)) {
+            $this->follower->add($follower);
+            $follower->setFollow($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFollower(Network $follower): self
+    {
+        if ($this->follower->removeElement($follower)) {
+            // set the owning side to null (unless already changed)
+            if ($follower->getFollow() === $this) {
+                $follower->setFollow(null);
             }
         }
 

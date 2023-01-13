@@ -21,7 +21,7 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_home_show', methods: ['GET'])]
+    #[Route('home/{id}', name: 'app_home_show', methods: ['GET'])]
     public function show(Album $album): Response
     {
         return $this->render('home/show.html.twig', [
