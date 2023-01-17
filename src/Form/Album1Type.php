@@ -13,10 +13,21 @@ class Album1Type extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
-            ->add('active_comment')
-            ->add('category')
-            ->add('imageCouv', FileType::class)
+            ->add('name', null, [
+                'label' => "Entrez le nom de l'album: ",
+                'attr' => [
+                    'placeholder' => "nom de l'album"
+                ]
+            ])
+            ->add('active_comment', null, [
+                'label' => 'Activation des commentaires'
+            ])
+            ->add('category', null, [
+                'label' => 'Assignez une catégorie: '
+            ])
+            ->add('imageCouv', FileType::class, [
+                'label' => "Entrez l'image de couverture: "
+            ])
         ;
     }
 

@@ -1,4 +1,25 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+    <div id="cadreTitleLogin">
+        <img id="logoReduit" src="/images/logo_reduit.png" alt="logo">
+        <h1 class="titleFormLogin">Ajout de média dans l'album</h1>
+    </div>
+
+    <div class="plus-box">
+        <div class="boxLogin xlarge">
+            {{ form_label(form.link) }}
+            {{ form_widget(form.link) }}
+        </div>
+
+        <div class="boxLogin xlarge">
+            {{ form_label(form.album) }}
+            {{ form_widget(form.album) }}
+        </div>
+
+        <div class="boxLogin xlarge">
+            <input type="hidden" name="_csrf_token"value="{{ csrf_token('authenticate') }}">
+            <button class="btn">{{ button_label|default('Ajouter') }}</button>
+        </div>
+    </div>
+
 {{ form_end(form) }}

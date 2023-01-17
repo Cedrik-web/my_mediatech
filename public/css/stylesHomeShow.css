@@ -1,0 +1,130 @@
+header {
+    z-index: 10;
+}
+
+main {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+#boxCarteMedia {
+    width: 80%;
+    min-height: 680px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.carteMediaPortrait {
+    width: 418px;
+    height: 570px;
+    margin: 20px;
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.50);
+    box-shadow: 5px 5px 10px 10px black;
+}
+
+.carteMediaPaysage {
+    width: 570px;
+    height: 418px;
+    margin: 20px;
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.50);
+    box-shadow: 5px 5px 10px 10px black;
+}
+
+.couvPortrait {
+    width: 418px;
+    height: 570px;
+    background-position: center;
+    position: absolute;
+}
+
+.couvPaysage {
+    width: 570px;
+    height: 418px;
+    background-position: center;
+    position: absolute;
+}
+
+.fullZonePortrait {
+    width: 418px;
+    height: 570px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    position: relative;
+    left: 10px;
+}
+
+.fullZoneLandcape {
+    width: 570px;
+    height: 418px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    position: relative;
+    left: 10px;
+}
+
+.pastille {
+    position: absolute;
+    background-color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30%;
+    width: 30%;
+    top: -2px;
+    border-radius: 10px;
+}
+
+.pastillePaysage {
+    position: absolute;
+    background-color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30%;
+    width: 30%;
+    top: -2px;
+    border-radius: 10px;
+}
+
+.cercleMediaShow {
+    border-top-right-radius: 20px;
+}
+
+.cercleMediaShow > img {
+    height: 25px;
+}
+
+.m-left {
+    margin-left: 15px;
+    position: relative;
+}
+
+.m-right {
+    margin-right: 15px;
+    position: relative;
+}
+
+.compteur {
+    position: absolute;
+    color: white;
+    bottom: -12px;
+}
+
+.compteur > p {
+    font-size: xx-small;
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 2px;
+    border-radius: 50%;
+}
+
+.comment {
+    left: 20px;
+}
+
+.like {
+    right: 5px;
+}

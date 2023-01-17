@@ -6,63 +6,139 @@ header {
 
 main {
     width: 100%;
-    min-height: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-main > a {
+#findNav {
+    margin: 20px 0 20px 0;
+    height: 30px;
+    width: 80%;
     display: flex;
-    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#findBar {
+    background-color: rgba(128, 128, 128, 0.6);
+    box-shadow: 5px 5px 10px 5px black;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 60%;
+    height: 100%;
+}
+
+#find {
+    height: 100%;
+    width: 150px;
+    background-color: gray;
+    border-radius: 15px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    display: flex;
     justify-content: center;
-    text-decoration: none;
+    align-items: center;
+}
+
+#input {
+    width: 80%;
+    height: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#input > input {
+    width: 100%;
+    height: 70%;
+    text-align: center;
+}
+
+#loupe {
+    height: 29px;
+    width: 29px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#loupe > button {
+    border-radius: 15px;
+    height: 29px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#categories {
+    height: 29px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 10px 5px black;
+}
+
+#categories > select {
+    height: 100%;
+    width: 150px;
+    border-radius: 20px;
+}
+
+#boxForm {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+#boxForm > a {
+    height: 350px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: black;
 }
 
-#boxCarte {
-    width: 80%;
-    min-height: 680px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
 .carteMedia {
-    width: 200px;
-    height: 200px;
+    width: 300px;
+    height: 300px;
     margin: 20px;
     display: inline-block;
     background-color: rgba(255, 255, 255, 0.50);
+    box-shadow: 5px 5px 10px 10px black;
 }
 
 .zone1 {
-    height: 66px;
+    height: 100px;
     position: relative;
 }
 
 .zoneText {
     position: relative;
-    width: 130px;
-    height: 66px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 180px;
+    height: 100px;
     background-color: rgba(255, 255, 255, 0.521);
 }
 
 .zoneText > h3 {
     margin: 0;
-    padding: 18px 0 0 0 ;
-    font-size: small;
+    font-size: medium;
 }
 
 .zoneText > p {
     margin: 0;
-    padding: 0;
-    font-size: x-small;
+    font-size: small;
 }
 
 .couv {
-    width: 200px;
-    height: 200px;
+    width: 300px;
+    height: 300px;
     background-position: center;
     position: absolute;
 }
 
-.absolute {
-    position: relative;
-    top: -69px;
-}
+

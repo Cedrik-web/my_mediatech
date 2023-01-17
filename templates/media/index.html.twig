@@ -2,36 +2,109 @@
 
 {% block title %}Media index{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="/css/stylesMedias.css">
+{% endblock %}
+
 {% block body %}
-    <h1>Media index</h1>
+<header>
+    <div class="logo">
+        <img class="lG" src="/images/logo.png" alt="logo my média tech">
+    </div>
+    <div class="navbar">
+        <div>
+            <p class="accroche">Votre médiathèque privée partout et à partager avec vos amis.</p>
+        </div>
+        <div class="menu">
+            <a class="passive" href="{{ path('app_home') }}" >Home</a>
+            <a class="active" href="{{ path('app_media_index') }}">Mes Médias</a>
+            <a class="passive" href="{{ path('app_network_index') }}">Mon Réseaux</a>
+            <a class="passive" href="#">Contact</a>
+        </div>
+    </div>
+    <div class="connexion">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Created_at</th>
-                <th>Link</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for medium in media %}
-            <tr>
-                <td>{{ medium.id }}</td>
-                <td>{{ medium.createdAt ? medium.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ medium.link }}</td>
-                <td>
-                    <a href="{{ path('app_media_show', {'id': medium.id}) }}">show</a>
-                    <a href="{{ path('app_media_edit', {'id': medium.id}) }}">edit</a>
-                </td>
-            </tr>
+        {% if app.user %}
+        <div class="menu-connexion">
+            <div class="line-connexion">
+                <div class="cercle"><img src="/images/person.svg" alt="customer"></div>
+                <a class="passive" href="{{ path('app_logout') }}">{{ app.user.FirstName }}</a>
+            </div>
+        </div>    
         {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <div class="menu-connexion">
+            <div class="line-connexion">
+                <div class="cercle"><img src="/images/person.svg" alt="customer"></div>
+                <a class="passive" href="{{ path('app_login') }}">Connexion</a>
+            </div>
+        </div>
+        {% endif %}
+        
+    </div>
+</header>
 
-    <a href="{{ path('app_media_new') }}">Create new</a>
+<main>
+
+   
+    <div id="boxCarte">
+        {% set count = 0 %}
+        {% for album in albums %}
+            {% set count = count + 1 %}
+        {% endfor %}    
+        {% if count == 0  %}
+            <div class="carteMedia">
+                <div class="ajout">
+                    <a href="{{ path('app_album_new') }}"><img class="plus" src="/images/plus-circle.svg" alt="plus addition d'albun"></a>
+                </div>
+            </div>
+        {% else %}
+            <div class="carteMedia">
+                <div class="ajout">
+                    <a href="{{ path('app_album_new') }}"><img class="plus" src="/images/plus-circle.svg" alt="plus addition d'albun"></a>
+                </div>
+            </div>
+        {% endif %}    
+
+        {% for album in albums %}
+            <div class="carteMedia">
+                <img class="couv" src="{{ album.imageCouv }}" alt="{{ album.name }}">
+                <div class="zone1"></div>
+                <div class="zoneText">
+                    <a href="{{ path('app_media_show', {'id': album.id}) }}">
+                        <h3>{{ album.getUser().getFullName() }}</h3>
+                        <p>{{ album.name }}</p>
+                    </a>
+                </div>
+                <div class="zoneBtn">
+                    <form method="post" action="{{ path('app_album_delete', {'id': album.id}) }}" onsubmit="return confirm('Voulez vous vraiment supprimer cette album?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ album.id) }}">
+                        <div class="cercleMedia"><button class="trash"><img src="/images/trash3.svg" alt="plus addition d'albun"></button></div>
+                    </form>
+                    <a href="{{ path('app_album_edit', {'id': album.id}) }}"><div class="cercleMedia pencil"><img src="/images/pencil-square.svg" alt="plus addition d'albun"></div></a>
+                </div>
+            </div>
+        
+            {% else %}  
+
+        {% endfor %}
+    </div>    
+
+
+</main>
+
+<footer>
+    <div class="boxLeft">
+        <img class="mini" src="/images/logo_reduit.png" alt="logo my média tech">
+    </div>
+    <div class="boxCenter">
+        <div class="line">
+            <p>Réaliser par Rougier Cédrik</p>
+        </div>
+    </div>
+    <div class="boxRigth">
+        <div>
+            <a href="#">Mentions légales</a>
+        </div>
+    </div>   
+</footer>
 {% endblock %}

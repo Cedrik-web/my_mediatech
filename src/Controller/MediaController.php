@@ -3,22 +3,32 @@
 namespace App\Controller;
 
 use App\Entity\Media;
-use App\Form\MediaType;
-use App\Repository\MediaRepository;
 use DateTimeImmutable;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Form\MediaType;
+use App\Repository\AlbumRepository;
+use App\Repository\MediaRepository;
+use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/media')]
 class MediaController extends AbstractController
 {
+    private $session;
+
+    public function __construct(RequestStack $requestStack) {
+        $this->session = $requestStack->getSession();
+    }
+    
     #[Route('/', name: 'app_media_index', methods: ['GET'])]
-    public function index(MediaRepository $mediaRepository): Response
+    public function index(AlbumRepository $albumRepository): Response
     {
+        
         return $this->render('media/index.html.twig', [
-            'media' => $mediaRepository->findAll(),
+            'albums' => $albumRepository->findAll(),
         ]);
     }
 
@@ -66,10 +76,16 @@ class MediaController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_media_show', methods: ['GET'])]
-    public function show(Media $medium): Response
-    {
+    public function show($id, MediaRepository $mediaRepository): Response
+    {   
+        $album_id = (int) explode('-', $id, 2)[0];
+        $filter = [];
+        $order = ['id'=> 'ASC'];
+
+        $filter['album'] = $album_id;
+
         return $this->render('media/show.html.twig', [
-            'medium' => $medium,
+            'media' => $mediaRepository->findBy($filter, $order),
         ]);
     }
 

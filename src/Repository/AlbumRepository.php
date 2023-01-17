@@ -39,6 +39,16 @@ class AlbumRepository extends ServiceEntityRepository
         }
     }
 
+    public function search($term)
+    {   
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            'SELECT a FROM App\Entity\Album a WHERE a.name LIKE :Term'
+        )->setParameter('Term', '%'.$term.'%');
+       
+        return $query->getResult();
+    }
+
 //    /**
 //     * @return Album[] Returns an array of Album objects
 //     */

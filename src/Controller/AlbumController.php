@@ -3,13 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Album;
+use App\Entity\Media;
+use DateTimeImmutable;
 use App\Form\Album1Type;
 use App\Repository\AlbumRepository;
-use DateTimeImmutable;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/album')]
 class AlbumController extends AbstractController
@@ -45,7 +46,7 @@ class AlbumController extends AbstractController
             $album->setUpdatedAt(new DateTimeImmutable());
             $albumRepository->save($album, true);
 
-            return $this->redirectToRoute('app_album_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_media_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('album/new.html.twig', [
@@ -87,6 +88,6 @@ class AlbumController extends AbstractController
             $albumRepository->remove($album, true);
         }
 
-        return $this->redirectToRoute('app_album_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_media_index', [], Response::HTTP_SEE_OTHER);
     }
 }

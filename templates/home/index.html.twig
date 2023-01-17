@@ -45,22 +45,47 @@
 </header>
 
 <main>
+    {% if app.user %}
+    <form id="findNav" method="GET">
+        <div id="findBar">
+            <div id="find">
+                <p>Recherche</p>
+            </div>
+            <div id="input">
+                <input type="text" name="find">
+            </div>
+            <div id="loupe">
+                <button><img class="mini" src="/images/search.svg" alt="loupe de recherche"></button>
+            </div>
+        </div>
+        
+        <div id="categories">
+            <select name="category" id="category">
+                <option value="">Toutes les catégories</option>
+                {% for category in categories %}
+                <option value="{{ category.id }}" {% if app.request.get('category')==category.id %} selected {% endif %}>{{ category.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </form>
+
     <div id="boxForm">
         {% for album in albums %}
             <a href="{{ path('app_home_show' , {'id': album.id}) }}">
-                <div id="boxCarte">
-                    <div class="carteMedia">
-                        <img class="couv" src="{{ album.imageCouv }}" alt="{{ album.name }}">
-                        <div class="zone1"></div>
-                        <div class="zoneText">
-                            <h3>{{ album.getUser().getFullName() }}</h3>
-                            <p>{{ album.name }}</p>
-                        </div>
+                <div class="carteMedia">
+                    <img class="couv" src="{{ album.imageCouv }}" alt="{{ album.name }}">
+                    <div class="zone1"></div>
+                    <div class="zoneText">
+                        <h3>{{ album.getUser().getFullName() }}</h3>
+                        <p>{{ album.name }}</p>
                     </div>
                 </div>
             </a>
         {% endfor %}
     </div>
+    {% else %}
+        <a href="{{ path('app_login') }}">Vous devez vous connecter</a>
+    {% endif %}
 </main>
 
 <footer>

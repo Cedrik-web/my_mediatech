@@ -13,8 +13,12 @@ class MediaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('link', FileType::class)
-            ->add('album')
+            ->add('link', FileType::class, [
+                'label' => 'Ajoutez un média: '
+            ])
+            ->add('album', null, [
+                'label' => 'Selectionnez un album: '
+            ])
         ;
     }
 
