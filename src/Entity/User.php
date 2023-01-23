@@ -74,6 +74,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'follow', targetEntity: Network::class)]
     private Collection $follower;
 
+    #[ORM\Column]
+    private ?array $myfriends = [];
+
+    #[ORM\Column]
+    private ?array $myFollowers = [];
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ForWhy::class)]
+    private Collection $group_friends;
+
     public function __construct()
     {
         $this->albums = new ArrayCollection();
@@ -81,6 +90,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->likes = new ArrayCollection();
         $this->networks = new ArrayCollection();
         $this->follower = new ArrayCollection();
+        $this->group_friends = new ArrayCollection();
     }
 
     public function __toString()
@@ -265,7 +275,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+    
+    public function getYears() 
+    {
+        $date = $this->created_at;
+        $years = date_format($date,"Y");
+        return $years;
+    }
 
+    public function getMonth() 
+    {
+        $date = $this->created_at;
+        $month = date_format($date,"m");
+        return $month;
+    }
+    
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updated_at;
@@ -421,6 +445,60 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($follower->getFollow() === $this) {
                 $follower->setFollow(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getMyfriends(): ?array
+    {
+        return $this->myfriends;
+    }
+
+    public function setMyfriends(?array $myfriends): self
+    {
+        $this->myfriends = $myfriends;
+
+        return $this;
+    }
+
+    public function getMyFollowers(): ?array
+    {
+        return $this->myFollowers;
+    }
+
+    public function setMyFollowers(?array $myFollowers): self
+    {
+        $this->myFollowers = $myFollowers;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ForWhy>
+     */
+    public function getGroupFriends(): Collection
+    {
+        return $this->group_friends;
+    }
+
+    public function addGroupFriend(ForWhy $groupFriend): self
+    {
+        if (!$this->group_friends->contains($groupFriend)) {
+            $this->group_friends->add($groupFriend);
+            $groupFriend->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGroupFriend(ForWhy $groupFriend): self
+    {
+        if ($this->group_friends->removeElement($groupFriend)) {
+            // set the owning side to null (unless already changed)
+            if ($groupFriend->getUser() === $this) {
+                $groupFriend->setUser(null);
             }
         }
 

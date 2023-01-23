@@ -3,16 +3,30 @@
 namespace App\Controller;
 
 use App\Entity\Like;
+use App\Entity\Media;
 use App\Form\LikeType;
 use App\Repository\LikeRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\MediaRepository;
+use App\Repository\UserRepository;
+use DateTime;
+use DateTimeImmutable;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+use function PHPSTORM_META\type;
 
 #[Route('/like')]
 class LikeController extends AbstractController
 {
+    private $session;
+
+    public function __construct(RequestStack $requestStack) {
+        $this->session = $requestStack->getSession();
+    }
+    
     #[Route('/', name: 'app_like_index', methods: ['GET'])]
     public function index(LikeRepository $likeRepository): Response
     {
@@ -22,13 +36,37 @@ class LikeController extends AbstractController
     }
 
     #[Route('/new', name: 'app_like_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, LikeRepository $likeRepository): Response
+    public function new(Request $request,MediaRepository $mediaRepository, LikeRepository $likeRepository): Response
     {
         $like = new Like();
+        $media = new Media();
         $form = $this->createForm(LikeType::class, $like);
         $form->handleRequest($request);
+       
+        $filter = ['media'=> $_GET['id']];
+        $order = ['id'=>'ASC'];
+        $data = $likeRepository->findBy($filter, $order);
+        $media = $mediaRepository->findBy($_GET, $order);
+        $id = strval($media[0]->getId());
+      
+        if (empty($data)) {
+        
+            $like->setCreatedAt(new DateTimeImmutable());
+            $like->setLiked(1);
+            $like->setView(0);
+            $like->setMedia($this->$id);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+            $likeRepository->save($like, true);
+
+            return $this->redirectToRoute('app_like_index', [], Response::HTTP_SEE_OTHER);
+            
+        } else {
+           
+            $like->setCreatedAt(new DateTimeImmutable());
+            $add = $data['liked'];
+            $like->setLiked($add+1);
+            $like->setView(0);
+
             $likeRepository->save($like, true);
 
             return $this->redirectToRoute('app_like_index', [], Response::HTTP_SEE_OTHER);

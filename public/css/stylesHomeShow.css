@@ -11,6 +11,9 @@ main {
 #boxCarteMedia {
     width: 80%;
     min-height: 680px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
@@ -92,9 +95,16 @@ main {
 
 .cercleMediaShow {
     border-top-right-radius: 20px;
+    width: 30px;
 }
 
-.cercleMediaShow > img {
+.cercleMediaShow > a {
+    background-color: rgba(0, 128, 0, 0);
+    border: none;
+    cursor: pointer;
+}
+
+.cercleMediaShow > a > img {
     height: 25px;
 }
 
@@ -127,4 +137,8 @@ main {
 
 .like {
     right: 5px;
+}
+
+.invisible {
+    display: none;
 }

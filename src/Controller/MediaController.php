@@ -39,18 +39,20 @@ class MediaController extends AbstractController
         $form = $this->createForm(MediaType::class, $medium);
         $form->handleRequest($request);
 
+        
+
         if ($form->isSubmitted() && $form->isValid()) {
-            
+
             // recupere le fichier d'un image en entier
             $file = $form['link']->getData();
             // recupere le chemin absolut (racine du site ) de site et cible sur le dossier public
-            $destination = $this->getParameter('kernel.project_dir').'/public/images';
+            $destination = $this->getParameter('kernel.project_dir').'/public/images/images';
             // recupere le nom de l'image original
             $originalFileName = $file->getClientOriginalName();
 
             // recupere la taille de l'image sous forme d'un tableau de trois elements width, height, et string
             $taille = getimagesize(($file));
-
+            
             if ($taille[0] > $taille[1]) {
                 $medium->setFormat('landscape');
             } else {
@@ -60,7 +62,7 @@ class MediaController extends AbstractController
             // reattribut les nouveaux parametre eu fichier image
             $file->move($destination, $originalFileName);
             // definie le lien de l'adresse de l'image sur le media
-            $medium->setLink('/images/'. $originalFileName);
+            $medium->setLink('/images/images/'. $originalFileName);
             
             $medium->setCreatedAt(new DateTimeImmutable());
 
@@ -70,7 +72,6 @@ class MediaController extends AbstractController
         }
 
         return $this->renderForm('media/new.html.twig', [
-            'medium' => $medium,
             'form' => $form,
         ]);
     }
@@ -89,21 +90,17 @@ class MediaController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_media_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Media $medium, MediaRepository $mediaRepository): Response
+    #[Route('/edit/{id}', name: 'app_media_edit', methods: ['GET', 'POST'])]
+    public function edit($id, MediaRepository $mediaRepository): Response
     {
-        $form = $this->createForm(MediaType::class, $medium);
-        $form->handleRequest($request);
+        $album_id = (int) explode('-', $id, 2)[0];
+        $filter = [];
+        $order = ['id'=> 'ASC'];
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $mediaRepository->save($medium, true);
-
-            return $this->redirectToRoute('app_media_index', [], Response::HTTP_SEE_OTHER);
-        }
+        $filter['album'] = $album_id;
 
         return $this->renderForm('media/edit.html.twig', [
-            'medium' => $medium,
-            'form' => $form,
+            'media' => $mediaRepository->findBy($filter, $order),
         ]);
     }
 

@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Betterworks';
+    src: url('/fonts/Betterworks.otf');
+}
+
 header {
     z-index: 10;
 }
@@ -18,11 +23,20 @@ main {
 }
 
 .carteMedia {
+    width: 220px;
+    height: 270px;
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    background-image: url(/images/pola.jpg);
+}
+
+.box-photo {
     width: 200px;
     height: 200px;
-    margin: 20px;
+    margin-top: 10px;
     display: inline-block;
-    background-color: rgba(255, 255, 255, 0.50);
+    background-color: gray;
 }
 
 .ajout {
@@ -57,7 +71,18 @@ main {
     position: relative;
     width: 130px;
     height: 66px;
-    background-color: rgba(255, 255, 255, 0.521);
+}
+
+.zoneText > a {
+    color: rgba(255, 255, 255, 0);
+}
+
+.zoneTextManuscrite {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 60px;
 }
 
 .zoneText > a > h3 {
@@ -67,10 +92,25 @@ main {
     color: black;
 }
 
+.zoneTextManuscrite > a > h3 {
+    margin: 0;
+    padding: 0 0 0 0 ;
+    font-size: x-small;
+    color: black;
+}
+
 .zoneText > a > p {
     margin: 0;
     padding: 0;
     font-size: x-small;
+    color: black;
+}
+
+.zoneTextManuscrite > p {
+    margin: 0;
+    padding: 0;
+    font-size: small;
+    font-family: 'Betterworks';
     color: black;
 }
 
@@ -149,6 +189,9 @@ main {
 #boxCarteMedia {
     width: 80%;
     min-height: 680px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
@@ -157,6 +200,17 @@ main {
     height: 570px;
     margin: 20px;
     display: inline-block;
+    background-color: rgba(255, 255, 255, 0.50);
+    box-shadow: 5px 5px 10px 10px black;
+}
+
+.carteMediaAdd {
+    width: 418px;
+    height: 418px;
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: rgba(255, 255, 255, 0.50);
     box-shadow: 5px 5px 10px 10px black;
 }
@@ -175,6 +229,18 @@ main {
     height: 570px;
     background-position: center;
     position: absolute;
+}
+
+.couvAdd {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    transition-duration: 0.5s;
+}
+
+.couvAdd:hover {
+    background-color: gray;
+    transition-duration: 0.5s;
 }
 
 .couvPaysage {
@@ -265,4 +331,8 @@ main {
 
 .like {
     right: 5px;
+}
+
+.invisible {
+    display: none;
 }

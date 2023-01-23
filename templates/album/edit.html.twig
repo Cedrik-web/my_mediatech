@@ -1,13 +1,126 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Album{% endblock %}
+{% block title %}Media{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="/css/stylesMedias.css">
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Album</h1>
 
-    {{ include('album/_form.html.twig', {'button_label': 'Update'}) }}
+<header>
+    <div class="logo">
+        <img class="lG" src="/images/logo.png" alt="logo my média tech">
+    </div>
+    <div class="navbar">
+        <div>
+            <p class="accroche">Votre médiathèque privée partout et à partager avec vos amis.</p>
+        </div>
+        <div class="menu">
+            <a class="passive" href="{{ path('app_home') }}" >Home</a>
+            <a class="active" href="{{ path('app_media_index') }}">Mes Médias</a>
+            <a class="passive" href="{{ path('app_network_index') }}">Mon Réseaux</a>
+            <a class="passive" href="#">Contact</a>
+        </div>
+    </div>
+    <div class="connexion">
 
-    <a href="{{ path('app_album_index') }}">back to list</a>
+        {% if app.user %}
+        <div class="menu-connexion">
+            <div class="line-connexion">
+                <div class="cercle"><img src="/images/person.svg" alt="customer"></div>
+                <a class="passive" href="{{ path('app_logout') }}">{{ app.user.FirstName }}</a>
+            </div>
+        </div>    
+        {% else %}
+        <div class="menu-connexion">
+            <div class="line-connexion">
+                <div class="cercle"><img src="/images/person.svg" alt="customer"></div>
+                <a class="passive" href="{{ path('app_login') }}">Connexion</a>
+            </div>
+        </div>
+        {% endif %}
+        
+    </div>
+</header>
 
-    {{ include('album/_delete_form.html.twig') }}
+<main>
+    {% if app.user %}
+    
+        <div id="boxCarteMedia">
+            {# box de rajout de media #}
+            <div class="carteMediaAdd">
+                <a href="{{ path('app_media_new') }}"><img class="couvAdd" src="/images/plus-circle.svg" alt="encadrement"></a>
+            </div>
+
+            {% for medium in media %}
+        
+                {% if medium.format == 'portrait' %}
+
+                    {# carte d'image en portrait définie dans le controler en boulean si width < height #}
+                    <div class="carteMediaPortrait">
+                        <img class="couvPortrait" src="{{ medium.link }}" alt="image de couverture">
+                    
+                        <div class="fullZonePortrait">
+                            <div class="m-right">
+                                <div class="cercleMediaShow">
+                                    <img src="/images/001-thumbs-up.png" alt="icon de likes">
+                                    <div class="pastille invisible"></div>
+                                    <div class="compteur like">
+                                        <p>0</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                {% else %}
+
+                    {# sinom la carte et en paysage #}
+                    <div class="carteMediaPaysage">
+                        <img class="couvPaysage" src="{{ medium.link }}" alt="image de couverture">
+                        <div class="fullZoneLandcape">
+                            <div class="m-right">
+                                <div class="cercleMediaShow">
+                                    <img src="/images/001-thumbs-up.png" alt="icon de likes">
+                                    <div class="pastillePaysage invisible"></div>
+                                    <div class="compteur like">
+                                        <p>0</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endif %}
+                
+            {% endfor %}
+            
+        </div>
+    {% else %}
+        <div class="boxBack">
+            <div class="bb black"><h2>Vous n'êtes pas connecté</h2></div>
+            <div class="bb">
+                <a href="{{ path('app_login') }}">Vous devez vous connecter</a>
+            </div>
+        </div>
+    {% endif %}
+</main>
+
+<footer>
+    <div class="boxLeft">
+        <img class="mini" src="/images/logo_reduit.png" alt="logo my média tech">
+    </div>
+    <div class="boxCenter">
+        <div class="line">
+            <p>Réaliser par Rougier Cédrik</p>
+        </div>
+    </div>
+    <div class="boxRigth">
+        <div>
+            <a href="#">Mentions légales</a>
+        </div>
+    </div>   
+</footer>
+
 {% endblock %}

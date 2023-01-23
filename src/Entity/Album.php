@@ -40,6 +40,9 @@ class Album
     #[ORM\Column(length: 255)]
     private ?string $imageCouv = null;
 
+    #[ORM\ManyToOne(inversedBy: 'album')]
+    private ?ForWhy $forWhy = null;
+
     public function __construct()
     {
         $this->media = new ArrayCollection();
@@ -165,6 +168,18 @@ class Album
     public function setImageCouv(string $imageCouv): self
     {
         $this->imageCouv = $imageCouv;
+
+        return $this;
+    }
+
+    public function getForWhy(): ?ForWhy
+    {
+        return $this->forWhy;
+    }
+
+    public function setForWhy(?ForWhy $forWhy): self
+    {
+        $this->forWhy = $forWhy;
 
         return $this;
     }

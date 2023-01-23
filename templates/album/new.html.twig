@@ -10,7 +10,11 @@
 {% block body %}
 <header>
     <div class="logo">
-        <img class="lG" src="/images/logo.png" alt="logo my média tech">
+        <img class="lG" src="/images/logo_reduit.png" alt="logo my média tech">
+        <div>
+            <h1 id="title">My MediaTech</h1>
+            <p class="accroche">Votre médiathèque privée partout et à partager avec vos amis.</p>
+        </div>
     </div>
     <div class="navbar">
         <div>
@@ -46,9 +50,46 @@
 
 <main>
     <div id="boxForm">
-       
-        {% include ("album/_form.html.twig") %}
+        
+        <div id="cadreTitleLogin">
+            <img id="logoReduit" src="/images/logo_reduit.png" alt="logo">
+            <h1 class="titleFormLogin">Création d'un nouvel album</h1>
+        </div>
 
+        {{ form_start(form) }}
+            <div id="box">
+                <div class="boxLogin little">
+                    {{ form_label(form.name) }}
+                    {{ form_widget(form.name) }}
+                </div>
+            
+                <div class="boxLogin litte">
+                    {{ form_label(form.active_comment) }}
+                    {{ form_widget(form.active_comment) }}
+                </div>
+            
+                <div class="boxLogin medium">
+                    {{ form_label(form.category) }}
+                    {{ form_widget(form.category) }}
+                    <a href="{{ path('app_category_new') }}"> + Ajouter une catégorie</a>
+                </div>
+        
+                <div class="boxLogin little">
+                    {{ form_label(form.forWhy) }}
+                    {{ form_widget(form.forWhy) }}
+                </div>
+            
+                <div class="boxLogin medium">
+                    {{ form_label(form.imageCouv) }}
+                    {{ form_widget(form.imageCouv) }}
+                </div>
+            
+                <div class="boxLogin little">
+                    <input type="hidden" name="_csrf_token"value="{{ csrf_token('authenticate') }}">
+                    <button class="btn">{{ button_label|default('Créer') }}</button>
+                </div>
+            </div>
+        {{ form_end(form) }}
     </div>
 </main>
 

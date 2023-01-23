@@ -10,12 +10,13 @@
 
 <header>
     <div class="logo">
-        <img class="lG" src="/images/logo.png" alt="logo my média tech">
-    </div>
-    <div class="navbar">
+        <img class="lG" src="/images/logo_reduit.png" alt="logo my média tech">
         <div>
+            <h1 id="title">My MediaTech</h1>
             <p class="accroche">Votre médiathèque privée partout et à partager avec vos amis.</p>
         </div>
+    </div>
+    <div class="navbar">
         <div class="menu">
             <a class="active" href="{{ path('app_home') }}" >Home</a>
             <a class="passive" href="{{ path('app_media_index') }}">Mes Médias</a>
@@ -46,45 +47,53 @@
 
 <main>
     {% if app.user %}
-    <form id="findNav" method="GET">
-        <div id="findBar">
-            <div id="find">
-                <p>Recherche</p>
-            </div>
-            <div id="input">
-                <input type="text" name="find">
-            </div>
-            <div id="loupe">
-                <button><img class="mini" src="/images/search.svg" alt="loupe de recherche"></button>
-            </div>
-        </div>
-        
-        <div id="categories">
-            <select name="category" id="category">
-                <option value="">Toutes les catégories</option>
-                {% for category in categories %}
-                <option value="{{ category.id }}" {% if app.request.get('category')==category.id %} selected {% endif %}>{{ category.name}}</option>
-                {% endfor %}
-            </select>
-        </div>
-    </form>
-
-    <div id="boxForm">
-        {% for album in albums %}
-            <a href="{{ path('app_home_show' , {'id': album.id}) }}">
-                <div class="carteMedia">
-                    <img class="couv" src="{{ album.imageCouv }}" alt="{{ album.name }}">
-                    <div class="zone1"></div>
-                    <div class="zoneText">
-                        <h3>{{ album.getUser().getFullName() }}</h3>
-                        <p>{{ album.name }}</p>
-                    </div>
+        <form id="findNav" method="GET">
+            <div id="findBar">
+                <div id="find">
+                    <p>Recherche</p>
                 </div>
-            </a>
-        {% endfor %}
-    </div>
+                <div id="input">
+                    <input type="text" name="find">
+                </div>
+                <div id="loupe">
+                    <button><img class="mini" src="/images/search.svg" alt="loupe de recherche"></button>
+                </div>
+            </div>
+            
+            <div id="categories">
+                <select name="category" id="category">
+                    <option value="">Toutes les catégories</option>
+                    {% for category in categories %}
+                    <option value="{{ category.id }}" {% if app.request.get('category')==category.id %} selected {% endif %}>{{ category.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+
+        <div id="boxForm">
+            {% for album in albums %}
+                {% if (app.user.getId() in album.getUser.myFollowers()) %}
+                    <a href="{{ path('app_home_show' , {'id': album.id}) }}">
+                        <div class="carteMedia">
+                            <img class="couv" src="{{ album.imageCouv }}" alt="{{ album.name }}">
+                            <div class="zone1"></div>
+                            <div class="zoneText">
+                                <h3>{{ album.getUser().getFullName() }}</h3>
+                                <p>{{ album.name }}</p>
+                            </div>
+                        </div>
+                    </a>
+                {% else %}    
+                {% endif %}
+            {% endfor %}
+        </div>
     {% else %}
-        <a href="{{ path('app_login') }}">Vous devez vous connecter</a>
+        <div class="boxBack">
+            <div class="bb black"><h2>Vous n'êtes pas connecté</h2></div>
+            <div class="bb">
+                <a href="{{ path('app_login') }}">Vous devez vous connecter</a>
+            </div>
+        </div>
     {% endif %}
 </main>
 

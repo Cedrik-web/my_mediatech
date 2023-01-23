@@ -29,9 +29,17 @@ class Like
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'likes')]
     private Collection $user;
 
+    #[ORM\Column(type: 'boolean', nullable: false, options:['default' => 0])]
+    private ?bool $view = null;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->id;
     }
 
     public function getId(): ?int
@@ -95,6 +103,18 @@ class Like
     public function removeUser(User $user): self
     {
         $this->user->removeElement($user);
+
+        return $this;
+    }
+
+    public function isView(): ?bool
+    {
+        return $this->view;
+    }
+
+    public function setView(bool $view): self
+    {
+        $this->view = $view;
 
         return $this;
     }

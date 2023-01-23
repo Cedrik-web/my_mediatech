@@ -9,11 +9,13 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
+    min-height: 700px;
 }
 
 #findNav {
     margin: 20px 0 20px 0;
-    height: 30px;
+    height: 40px;
     width: 80%;
     display: flex;
     justify-content: space-between;
@@ -21,20 +23,18 @@ main {
 }
 
 #findBar {
-    background-color: rgba(128, 128, 128, 0.6);
-    box-shadow: 5px 5px 10px 5px black;
-    border-radius: 20px;
+    background-image: url('/images/carbone.jpg');
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 60%;
+    width: 70%;
     height: 100%;
 }
 
 #find {
     height: 100%;
-    width: 150px;
-    background-color: gray;
+    width: 15%;
+    color: white;
     border-radius: 15px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     display: flex;
@@ -58,15 +58,13 @@ main {
 
 #loupe {
     height: 29px;
-    width: 29px;
-    border-radius: 50%;
+    width: 5%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 #loupe > button {
-    border-radius: 15px;
     height: 29px;
     border: none;
     display: flex;
@@ -75,15 +73,19 @@ main {
 }
 
 #categories {
-    height: 29px;
-    border-radius: 20px;
-    box-shadow: 5px 5px 10px 5px black;
+    height: 40px;
 }
 
 #categories > select {
     height: 100%;
     width: 150px;
-    border-radius: 20px;
+    background-image: url('/images/carbone.jpg');
+    color: white;
+    border: none;
+}
+
+#categories > select > option {
+    color: black;
 }
 
 #boxForm {

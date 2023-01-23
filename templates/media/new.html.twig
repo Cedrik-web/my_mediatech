@@ -45,13 +45,20 @@
 </header>
 
 <main>
+    {% if app.user %}
+        <div id="boxForm">
 
-    <div id="boxForm">
+            {{ include('media/_form.html.twig') }}
 
-        {{ include('media/_form.html.twig') }}
-
-    </div>
-  
+        </div>
+    {% else %}
+        <div class="boxBack">
+            <div class="bb black"><h2>Vous n'êtes pas connecté</h2></div>
+            <div class="bb">
+                <a href="{{ path('app_login') }}">Vous devez vous connecter</a>
+            </div>
+        </div>
+    {% endif %}  
 </main>
 
 <footer>

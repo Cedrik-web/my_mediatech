@@ -9,7 +9,11 @@
 {% block body %}
 <header>
     <div class="logo">
-        <img class="lG" src="/images/logo.png" alt="logo my média tech">
+        <img class="lG" src="/images/logo_reduit.png" alt="logo my média tech">
+        <div>
+            <h1 id="title">My MediaTech</h1>
+            <p class="accroche">Votre médiathèque privée partout et à partager avec vos amis.</p>
+        </div>
     </div>
     <div class="navbar">
         <div>
@@ -44,52 +48,55 @@
 </header>
 
 <main>
-
+    {% if app.user %}
    
-    <div id="boxCarte">
-        {% set count = 0 %}
-        {% for album in albums %}
-            {% set count = count + 1 %}
-        {% endfor %}    
-        {% if count == 0  %}
+        <div id="boxCarte">
+       
             <div class="carteMedia">
-                <div class="ajout">
-                    <a href="{{ path('app_album_new') }}"><img class="plus" src="/images/plus-circle.svg" alt="plus addition d'albun"></a>
+                <div class="box-photo">
+                    <div class="ajout">
+                        <a href="{{ path('app_album_new') }}"><img class="plus" src="/images/plus-circle.svg" alt="plus addition d'albun"></a>
+                    </div>
                 </div>
             </div>
-        {% else %}
-            <div class="carteMedia">
-                <div class="ajout">
-                    <a href="{{ path('app_album_new') }}"><img class="plus" src="/images/plus-circle.svg" alt="plus addition d'albun"></a>
-                </div>
+            
+            {% for album in albums %}
+                {% if (app.user.getId() == album.getUser.getId()) %}
+                    <div class="carteMedia">
+                        <div class="box-photo">
+                            <img class="couv" src="{{ album.imageCouv }}" alt="{{ album.name }}">
+                            <div class="zone1"></div>
+                            <div class="zoneText">
+                                <a href="{{ path('app_media_show', {'id': album.id}) }}">
+                                    Zone d'activation de liens zesf srf s ss fsfs
+                                </a>
+                            </div>
+                            <div class="zoneBtn">
+                                <form method="post" action="{{ path('app_album_delete', {'id': album.id}) }}" onsubmit="return confirm('Voulez vous vraiment supprimer cette album?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ album.id) }}">
+                                    <div class="cercleMedia"><button class="trash"><img src="/images/trash3.svg" alt="plus addition d'albun"></button></div>
+                                </form>
+                                <a href="{{ path('app_album_edit', {'id': album.id}) }}"><div class="cercleMedia pencil"><img src="/images/pencil-square.svg" alt="plus addition d'albun"></div></a>
+                            </div>
+                            <div class="zoneTextManuscrite">
+                                    <p>{{ album.name }}</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}  
+                {% endif %}
+            {% endfor %}
+        </div>    
+
+    {% else %}
+        <div class="boxBack">
+            <div class="bb black"><h2>Vous n'êtes pas connecté</h2></div>
+            <div class="bb">
+                <a href="{{ path('app_login') }}">Vous devez vous connecter</a>
             </div>
-        {% endif %}    
-
-        {% for album in albums %}
-            <div class="carteMedia">
-                <img class="couv" src="{{ album.imageCouv }}" alt="{{ album.name }}">
-                <div class="zone1"></div>
-                <div class="zoneText">
-                    <a href="{{ path('app_media_show', {'id': album.id}) }}">
-                        <h3>{{ album.getUser().getFullName() }}</h3>
-                        <p>{{ album.name }}</p>
-                    </a>
-                </div>
-                <div class="zoneBtn">
-                    <form method="post" action="{{ path('app_album_delete', {'id': album.id}) }}" onsubmit="return confirm('Voulez vous vraiment supprimer cette album?');">
-                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ album.id) }}">
-                        <div class="cercleMedia"><button class="trash"><img src="/images/trash3.svg" alt="plus addition d'albun"></button></div>
-                    </form>
-                    <a href="{{ path('app_album_edit', {'id': album.id}) }}"><div class="cercleMedia pencil"><img src="/images/pencil-square.svg" alt="plus addition d'albun"></div></a>
-                </div>
-            </div>
-        
-            {% else %}  
-
-        {% endfor %}
-    </div>    
-
-
+        </div>
+    {% endif %}
 </main>
 
 <footer>

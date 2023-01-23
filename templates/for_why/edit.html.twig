@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit ForWhy{% endblock %}
+
+{% block body %}
+    <h1>Edit ForWhy</h1>
+
+    {{ include('for_why/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_for_why_index') }}">back to list</a>
+
+    {{ include('for_why/_delete_form.html.twig') }}
+{% endblock %}

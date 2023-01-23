@@ -39,6 +39,25 @@ class LikeRepository extends ServiceEntityRepository
         }
     }
 
+    // public function addLike() 
+    // {
+    //     if(isset($_POST["action"]) && $_POST["action"] == "add_like"){
+    //         // Récupérez l'ID de l'élément qui a reçu le "like" à partir des données POST
+    //         $item_id = $_POST["item_id"];
+            
+    //         // Ajoutez le "like" à la base de données
+    //         $entityManager = $this->getEntityManager();
+    //         $query = $entityManager->createQuery(
+    //             'SELECT a FROM App\Entity\Album a WHERE a.name LIKE :Term'
+    //         )->setParameter('Term', '%'.$term.'%');
+            
+    //         // Retourne un message de réussite ou d'erreur
+    //         echo json_encode(array("status" => "success"));
+    //         exit;
+    //     }
+        
+    // }
+
 //    /**
 //     * @return Like[] Returns an array of Like objects
 //     */

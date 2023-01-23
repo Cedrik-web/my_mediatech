@@ -25,6 +25,9 @@ class Album1Type extends AbstractType
             ->add('category', null, [
                 'label' => 'Assignez une catégorie: '
             ])
+            ->add('forWhy', null, [
+                'label' => 'Donner l acces à un groupe d amis: '
+            ])
             ->add('imageCouv', FileType::class, [
                 'label' => "Entrez l'image de couverture: "
             ])

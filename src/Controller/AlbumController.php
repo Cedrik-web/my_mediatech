@@ -3,10 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Album;
+use App\Entity\ForWhy;
 use App\Entity\Media;
 use DateTimeImmutable;
 use App\Form\Album1Type;
 use App\Repository\AlbumRepository;
+use App\Repository\CategoryRepository;
+use App\Repository\ForWhyRepository;
+use App\Repository\MediaRepository;
+use Container9NZxCVb\getUserTypeService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,23 +29,24 @@ class AlbumController extends AbstractController
     }
 
     #[Route('/new', name: 'app_album_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, AlbumRepository $albumRepository): Response
+    public function new(Request $request, ForWhyRepository $forWhyRepository, CategoryRepository $categoryRepository, AlbumRepository $albumRepository): Response
     {
         $album = new Album();
         $form = $this->createForm(Album1Type::class, $album);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+          
             // recupere le fichier du formulaire
             $file = $form['imageCouv']->getData();
             // recupere le chemin absolut de la racine du projet pour cible sur le dossier de reception du fichier
-            $destination = $this->getParameter('kernel.project_dir'). '/public/images';
+            $destination = $this->getParameter('kernel.project_dir'). '/public/images/images';
             // recupere le mon de l'image par defaut
             $originalFileName = $file->getClientOriginalName();
             // met le fichier dans le dossier images
             $file->move($destination, $originalFileName);
 
-            $album->setImageCouv('/images/'. $originalFileName);
+            $album->setImageCouv('/images/images/'. $originalFileName);
             $album->setUser($this->getUser());
             $album->setCreatedAt(new DateTimeImmutable());
             $album->setUpdatedAt(new DateTimeImmutable());
@@ -63,21 +69,17 @@ class AlbumController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_album_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Album $album, AlbumRepository $albumRepository): Response
+    #[Route('/edit/{id}', name: 'app_album_edit', methods: ['GET', 'POST'])]
+    public function edit($id, MediaRepository $mediaRepository): Response
     {
-        $form = $this->createForm(Album1Type::class, $album);
-        $form->handleRequest($request);
+        $album_id = (int) explode('-', $id, 2)[0];
+        $filter = [];
+        $order = ['id'=> 'ASC'];
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $albumRepository->save($album, true);
-
-            return $this->redirectToRoute('app_album_index', [], Response::HTTP_SEE_OTHER);
-        }
+        $filter['album'] = $album_id;
 
         return $this->renderForm('album/edit.html.twig', [
-            'album' => $album,
-            'form' => $form,
+            'media' => $mediaRepository->findBy($filter, $order),
         ]);
     }
 
