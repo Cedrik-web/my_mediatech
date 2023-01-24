@@ -59,38 +59,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
 
-    #[ORM\ManyToMany(targetEntity: Comment::class, mappedBy: 'user')]
-    private Collection $comments;
-
-    #[ORM\ManyToMany(targetEntity: Like::class, mappedBy: 'user')]
-    private Collection $likes;
-
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Album::class, orphanRemoval: true)]
     private Collection $albums;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Network::class)]
     private Collection $networks;
 
-    #[ORM\OneToMany(mappedBy: 'follow', targetEntity: Network::class)]
-    private Collection $follower;
-
-    #[ORM\Column]
-    private ?array $myfriends = [];
-
-    #[ORM\Column]
-    private ?array $myFollowers = [];
-
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ForWhy::class)]
-    private Collection $group_friends;
-
     public function __construct()
     {
         $this->albums = new ArrayCollection();
-        $this->comments = new ArrayCollection();
-        $this->likes = new ArrayCollection();
         $this->networks = new ArrayCollection();
-        $this->follower = new ArrayCollection();
-        $this->group_friends = new ArrayCollection();
     }
 
     public function __toString()
@@ -311,60 +289,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->albums;
     }
 
-    /**
-     * @return Collection<int, Comment>
-     */
-    public function getComments(): Collection
-    {
-        return $this->comments;
-    }
-
-    public function addComment(Comment $comment): self
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments->add($comment);
-            $comment->addUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeComment(Comment $comment): self
-    {
-        if ($this->comments->removeElement($comment)) {
-            $comment->removeUser($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Like>
-     */
-    public function getLikes(): Collection
-    {
-        return $this->likes;
-    }
-
-    public function addLike(Like $like): self
-    {
-        if (!$this->likes->contains($like)) {
-            $this->likes->add($like);
-            $like->addUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLike(Like $like): self
-    {
-        if ($this->likes->removeElement($like)) {
-            $like->removeUser($this);
-        }
-
-        return $this;
-    }
-
     public function getFullName() {
         return $this->first_name . ' ' . $this->last_name;
     }
@@ -415,90 +339,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($network->getUser() === $this) {
                 $network->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Network>
-     */
-    public function getFollower(): Collection
-    {
-        return $this->follower;
-    }
-
-    public function addFollower(Network $follower): self
-    {
-        if (!$this->follower->contains($follower)) {
-            $this->follower->add($follower);
-            $follower->setFollow($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFollower(Network $follower): self
-    {
-        if ($this->follower->removeElement($follower)) {
-            // set the owning side to null (unless already changed)
-            if ($follower->getFollow() === $this) {
-                $follower->setFollow(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getMyfriends(): ?array
-    {
-        return $this->myfriends;
-    }
-
-    public function setMyfriends(?array $myfriends): self
-    {
-        $this->myfriends = $myfriends;
-
-        return $this;
-    }
-
-    public function getMyFollowers(): ?array
-    {
-        return $this->myFollowers;
-    }
-
-    public function setMyFollowers(?array $myFollowers): self
-    {
-        $this->myFollowers = $myFollowers;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, ForWhy>
-     */
-    public function getGroupFriends(): Collection
-    {
-        return $this->group_friends;
-    }
-
-    public function addGroupFriend(ForWhy $groupFriend): self
-    {
-        if (!$this->group_friends->contains($groupFriend)) {
-            $this->group_friends->add($groupFriend);
-            $groupFriend->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeGroupFriend(ForWhy $groupFriend): self
-    {
-        if ($this->group_friends->removeElement($groupFriend)) {
-            // set the owning side to null (unless already changed)
-            if ($groupFriend->getUser() === $this) {
-                $groupFriend->setUser(null);
             }
         }
 

@@ -3,13 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Album;
-use App\Entity\ForWhy;
 use App\Entity\Media;
 use DateTimeImmutable;
-use App\Form\Album1Type;
+use App\Form\AlbumType;
 use App\Repository\AlbumRepository;
 use App\Repository\CategoryRepository;
-use App\Repository\ForWhyRepository;
 use App\Repository\MediaRepository;
 use Container9NZxCVb\getUserTypeService;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,10 +27,10 @@ class AlbumController extends AbstractController
     }
 
     #[Route('/new', name: 'app_album_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ForWhyRepository $forWhyRepository, CategoryRepository $categoryRepository, AlbumRepository $albumRepository): Response
+    public function new(Request $request, CategoryRepository $categoryRepository, AlbumRepository $albumRepository): Response
     {
         $album = new Album();
-        $form = $this->createForm(Album1Type::class, $album);
+        $form = $this->createForm(AlbumType::class, $album);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

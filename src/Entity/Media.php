@@ -21,23 +21,12 @@ class Media
     #[ORM\Column(length: 255)]
     private ?string $link = null;
 
-    #[ORM\OneToMany(mappedBy: 'media', targetEntity: Comment::class, orphanRemoval: true)]
-    private Collection $comments;
-
-    #[ORM\OneToMany(mappedBy: 'media', targetEntity: Like::class, orphanRemoval: true)]
-    private Collection $likes;
-
     #[ORM\Column(length: 255)]
     private ?string $format = null;
 
     #[ORM\ManyToOne(inversedBy: 'media')]
     private ?Album $album = null;
 
-    public function __construct()
-    {
-        $this->comments = new ArrayCollection();
-        $this->likes = new ArrayCollection();
-    }
 
     public function __toString()
     {
@@ -69,66 +58,6 @@ class Media
     public function setLink(string $link): self
     {
         $this->link = $link;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Comment>
-     */
-    public function getComments(): Collection
-    {
-        return $this->comments;
-    }
-
-    public function addComment(Comment $comment): self
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments->add($comment);
-            $comment->setMedia($this);
-        }
-
-        return $this;
-    }
-
-    public function removeComment(Comment $comment): self
-    {
-        if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
-            if ($comment->getMedia() === $this) {
-                $comment->setMedia(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Like>
-     */
-    public function getLikes(): Collection
-    {
-        return $this->likes;
-    }
-
-    public function addLike(Like $like): self
-    {
-        if (!$this->likes->contains($like)) {
-            $this->likes->add($like);
-            $like->setMedia($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLike(Like $like): self
-    {
-        if ($this->likes->removeElement($like)) {
-            // set the owning side to null (unless already changed)
-            if ($like->getMedia() === $this) {
-                $like->setMedia(null);
-            }
-        }
 
         return $this;
     }

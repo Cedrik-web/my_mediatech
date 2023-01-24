@@ -22,11 +22,14 @@ class Network
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
 
-    #[ORM\ManyToOne(inversedBy: 'follower')]
-    private ?User $follow = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?array $groups = [];
 
-    #[ORM\ManyToOne(inversedBy: 'networks')]
-    private ?Group $groupe = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?array $myFollowers = [];
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?array $myFriends = [];
 
     public function getId(): ?int
     {
@@ -69,26 +72,38 @@ class Network
         return $this;
     }
 
-    public function getFollow(): ?User
+    public function getGroups(): ?array
     {
-        return $this->follow;
+        return $this->groups;
     }
 
-    public function setFollow(?User $follow): self
+    public function setGroups(?array $groups): self
     {
-        $this->follow = $follow;
+        $this->groups = $groups;
 
         return $this;
     }
 
-    public function getGroupe(): ?Group
+    public function getMyFollowers(): ?array
     {
-        return $this->groupe;
+        return $this->myFollowers;
     }
 
-    public function setGroupe(?Group $groupe): self
+    public function setMyFollowers(?array $myFollowers): self
     {
-        $this->groupe = $groupe;
+        $this->myFollowers = $myFollowers;
+
+        return $this;
+    }
+
+    public function getMyFriends(): ?array
+    {
+        return $this->myFriends;
+    }
+
+    public function setMyFriends(?array $myFriends): self
+    {
+        $this->myFriends = $myFriends;
 
         return $this;
     }

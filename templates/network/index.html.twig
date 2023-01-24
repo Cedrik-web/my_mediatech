@@ -76,7 +76,8 @@
                             <td>{{ user.getFirstName() }}</td>
                             <td>{{ user.getYears() }}</td>
                             <td class="box-actions">
-                                {% if user.getId() in app.user.getMyfriends %}
+
+                                {% if user.getId() in userFriends %}
                                     <form class="action" method="post" action="{{ path('app_network_delete', {'id': user.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
                                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
                                         <button class="btn">Ne plus suivre</button>
@@ -86,11 +87,10 @@
                                         <a href="{{ path('app_network_new', {'id': user.getId() }) }}">Suivre</a>
                                     </div>
                                 {% endif %}
-                                
-                                
-                                {% if app.user.getMyFollowers[0][user.getId()] is defined %}
+                            
+                                {% if userFollowers[0][0][user.getId()] is defined %}
                     
-                                    {% if app.user.getMyFollowers[0][user.getId()] == 0 %}
+                                    {% if userFollowers[0][0][user.getId()] == 0 %}
                                         <div class="action2">
                                             <a href="{{ path('app_network_edit', {'id': user.getId() }) }}">Accepter la demande</a>
                                         </div>
@@ -99,17 +99,15 @@
                                             <a href="{{ path('app_network_edit', {'id': user.getId() }) }}">ne plus être amis</a>
                                         </div>
                                     {% endif %}
-                           
+                        
                                 {% else %}
 
                                 {% endif %}
-                                {% set array = user.getMyFollowers() %}
-                                {% set arrays = app.user.getMyfriends %}
-                                      
-                                {% if array[0][app.user.getId] is defined %}
-                                 
+
+                                {% if user_selectedFollowers[1][0][app.user.getId] is defined %}
+                                
                                 {% else %}
-                                        {% if user.getId() in arrays %}
+                                        {% if user.getId() in userFriends %}
                                             <div class="action">
                                                 <a href="{{ path('app_network_again', {'id': user.getId() }) }}">Renvoyer une demande</a>
                                             </div>
@@ -117,6 +115,7 @@
                                             
                                         {% endif %}
                                 {% endif %}
+                                    
                             </td>
                         </tr>
                     {% endif %}

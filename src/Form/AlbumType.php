@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
-class Album1Type extends AbstractType
+class AlbumType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -24,9 +24,6 @@ class Album1Type extends AbstractType
             ])
             ->add('category', null, [
                 'label' => 'Assignez une catégorie: '
-            ])
-            ->add('forWhy', null, [
-                'label' => 'Donner l acces à un groupe d amis: '
             ])
             ->add('imageCouv', FileType::class, [
                 'label' => "Entrez l'image de couverture: "
